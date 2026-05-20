@@ -10,9 +10,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-        "ahdjs": "^0.0.188",
+    "ahdjs": "^0.0.188",
     "vue": "^3.5.32"
-    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
@@ -23,12 +22,12 @@
     "typescript": "~6.0.0",
     "vite": "^8.0.8",
     "vite-plugin-vue-devtools": "^8.1.1",
-    "vue-tsc": "^3.2.6"
+    "vue-tsc": "^3.2.6",
     "gh-pages": "^5.0.0"
   },
-    "engines": {
+  "engines": {
     "node": "^20.19.0 || >=22.12.0"
-  }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/FAB-Builder/pagepilot-vanilla-vue-app.git"
