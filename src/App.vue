@@ -25,23 +25,11 @@ const banners = [
   </div>
 </template>
 
-<!-- <style scoped>
-.container {
-  /* max-width: 800px; */
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-family: sans-serif;
-}
-.project-name {
-  font-size: 2rem;
-  color: #42b883;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.banner-card {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-}
-</style> -->
+ <style scoped>
+ *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+  }
+</style>
