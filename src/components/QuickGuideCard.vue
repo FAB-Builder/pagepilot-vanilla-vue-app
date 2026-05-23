@@ -6,6 +6,7 @@ export default defineComponent({ name: "QuickGuideCard" });
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from "vue";
 import AHDjsLib from "ahdjs";
+import 'ahdjs/build/css/index.css';
 // CJS bundle: unwrap .default if present
 const AHDjs = (AHDjsLib as any).default ?? AHDjsLib;
 
