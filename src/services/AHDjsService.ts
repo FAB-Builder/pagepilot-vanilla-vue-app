@@ -25,6 +25,7 @@ class AHDjsService {
         apiHost: PAGE_PILOT_API_HOST,
         visitorId,
         showProgressbar: false,
+        
       })
       this.visitorId = visitorId
       this.applicationId = applicationId

@@ -71,7 +71,7 @@ const runTooltip = async () => {
               title: step.title,
               description: step.content,
               animationType: step.animationType || behavior.animationType || 'fadeIn',
-              isBackdrop: step.isBackdrop ?? behavior.isBackdrop ?? true,
+              isBackdrop:false,
               isCaret: step.isCaret ?? behavior.isCaret ?? true,
               position: step.position || behavior.position,
               type: 'tooltip',
