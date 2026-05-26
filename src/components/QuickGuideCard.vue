@@ -5,10 +5,8 @@ export default defineComponent({ name: "QuickGuideCard" });
 
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from "vue";
-import AHDjsLib from "ahdjs";
-import 'ahdjs/build/css/index.css';
-// CJS bundle: unwrap .default if present
-const AHDjs = (AHDjsLib as any).default ?? AHDjsLib;
+import 'ahdjs/build/css/index.css'
+import AHDjsService from '@/services/AHDjsService'
 
 // --- Types ---
 interface QuickGuideItem {
@@ -35,8 +33,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   items: () => [],
 });
-
-const PAGE_PILOT_API_HOST = "https://pagepilot.fabbuilder.com";
 
 // Simulated current user — replace with your actual auth/user store
 const currentUser = { id: "visitor-id" };
@@ -107,12 +103,7 @@ const fetchAppBanner = async (): Promise<boolean> => {
   try {
     bannerStatus.value = "loading";
 
-    const ahdJS = AHDjs(undefined, {
-      applicationId: activeApplicationId.value,
-      apiHost: PAGE_PILOT_API_HOST,
-      visitorId: currentUser.id,
-      showProgressbar: false,
-    });
+    const ahdJS = AHDjsService.getInstance().init(currentUser.id, activeApplicationId.value);
 
     await Promise.all(
       activeBanners.value.flatMap((b) => [

@@ -2,6 +2,8 @@
 
 This workspace contains a minimal Vue 3 application scaffolded with Vite.
 
+**Live demo:** https://fab-builder.github.io/pagepilot-vanilla-vue-app/
+
 Quick start:
 
 1. Install dependencies:

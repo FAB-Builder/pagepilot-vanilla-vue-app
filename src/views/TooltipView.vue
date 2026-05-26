@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import AHDjsLib from 'ahdjs'
 import 'ahdjs/build/css/index.css'
-const AHDjs = (AHDjsLib as any).default ?? AHDjsLib
+import AHDjsService from '@/services/AHDjsService'
+import { PAGE_PILOT_API_HOST } from '@/shared/constants/constants'
 
-const PAGE_PILOT_API_HOST = 'https://pagepilot.fabbuilder.com'
 const currentUser = { id: 'visitor-id' }
 
 const applicationId = ref('')
@@ -108,12 +107,7 @@ const runTooltip = async () => {
     // 3. Wait for Vue to render the placeholder elements, then attach beacons
     await nextTick()
 
-    const ahdJS = AHDjs(undefined, {
-      applicationId: applicationId.value,
-      apiHost: PAGE_PILOT_API_HOST,
-      visitorId: currentUser.id,
-      showProgressbar: false,
-    })
+    const ahdJS = AHDjsService.getInstance().init(currentUser.id, applicationId.value)
     await ahdJS.setBeacons(beacons)
 
     status.value = 'success'
@@ -122,6 +116,11 @@ const runTooltip = async () => {
     errorMsg.value = 'Failed to load tooltips. Check your Application ID and Slug.'
     status.value = 'failed'
   }
+}
+
+const stopTooltip = () => {
+  AHDjsService.getInstance().getClient()?.stop()
+  status.value = 'idle'
 }
 </script>
 
@@ -156,6 +155,13 @@ const runTooltip = async () => {
           @click="runTooltip"
         >
           {{ status === 'loading' ? 'Running…' : 'Run Tooltip' }}
+        </button>
+        <button
+          class="stop-btn"
+          :disabled="status !== 'success'"
+          @click="stopTooltip"
+        >
+          Stop
         </button>
       </div>
     </div>
@@ -257,6 +263,28 @@ const runTooltip = async () => {
 }
 
 .run-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.stop-btn {
+  padding: 7px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  height: 34px;
+}
+
+.stop-btn:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.stop-btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
