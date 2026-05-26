@@ -71,7 +71,7 @@ const runTooltip = async () => {
               title: step.title,
               description: step.content,
               animationType: step.animationType || behavior.animationType || 'fadeIn',
-              isBackdrop:false,
+              isBackdrop:step.isBackdrop ?? behavior.isBackdrop ?? true,
               isCaret: step.isCaret ?? behavior.isCaret ?? true,
               position: step.position || behavior.position,
               type: 'tooltip',
@@ -134,6 +134,14 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
 </script>
 
 <template>
+  <button
+    v-if="previewSteps.length > 0"
+    class="floating-stop-btn"
+    @click="stopTooltip"
+  >
+    Stop
+  </button>
+
   <div class="view-container">
     <h1 class="view-title">Tooltip</h1>
     <p class="view-subtitle">Enter your Application ID and Tooltip slug, then click Run</p>
@@ -164,13 +172,6 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
           @click="runTooltip"
         >
           {{ status === 'loading' ? 'Running…' : 'Run Tooltip' }}
-        </button>
-        <button
-          class="stop-btn"
-          :disabled="status !== 'success'"
-          @click="stopTooltip"
-        >
-          Stop
         </button>
       </div>
     </div>
@@ -276,27 +277,28 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
   cursor: not-allowed;
 }
 
-.stop-btn {
-  padding: 7px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.floating-stop-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2147483647;
+  padding: 10px 28px;
+  font-size: 15px;
+  font-weight: 700;
   color: #fff;
   background: #ef4444;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s;
-  height: 34px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s, transform 0.1s;
 }
 
-.stop-btn:hover:not(:disabled) {
+.floating-stop-btn:hover {
   background: #dc2626;
+  transform: scale(1.04);
 }
 
-.stop-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
 
 .status-msg--error {
   font-size: 13px;

@@ -37,6 +37,14 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
 </script>
 
 <template>
+  <button
+    v-if="status === 'success'"
+    class="floating-stop-btn"
+    @click="stopTour"
+  >
+    Stop
+  </button>
+
   <div class="view-container">
     <h1 class="view-title">Tour</h1>
     <p class="view-subtitle">Enter your Application ID and Tour slug, then click Run</p>
@@ -67,13 +75,6 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
           @click="runTour"
         >
           {{ status === 'loading' ? 'Running…' : 'Run Tour' }}
-        </button>
-        <button
-          class="stop-btn"
-          :disabled="status !== 'success'"
-          @click="stopTour"
-        >
-          Stop
         </button>
       </div>
     </div>
@@ -164,27 +165,28 @@ onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
   cursor: not-allowed;
 }
 
-.stop-btn {
-  padding: 7px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.floating-stop-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2147483647;
+  padding: 10px 28px;
+  font-size: 15px;
+  font-weight: 700;
   color: #fff;
   background: #ef4444;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s;
-  height: 34px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s, transform 0.1s;
 }
 
-.stop-btn:hover:not(:disabled) {
+.floating-stop-btn:hover {
   background: #dc2626;
+  transform: scale(1.04);
 }
 
-.stop-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
 
 .status-msg--error {
   font-size: 13px;
