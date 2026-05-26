@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import 'ahdjs/build/css/index.css'
 import AHDjsService from '@/services/AHDjsService'
 
@@ -25,6 +25,15 @@ const stopTour = () => {
   AHDjsService.getInstance().getClient()?.stop()
   status.value = 'idle'
 }
+
+const handlePagePilotEvent = (event: MessageEvent) => {
+  if (event.data?.type === 'closeTooltip') {
+    stopTour()
+  }
+}
+
+onMounted(() => window.addEventListener('message', handlePagePilotEvent))
+onUnmounted(() => window.removeEventListener('message', handlePagePilotEvent))
 </script>
 
 <template>
