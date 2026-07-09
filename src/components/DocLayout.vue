@@ -15,18 +15,7 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { navItems } from '../navItems';
-
-export interface DocSection {
-  id: string;
-  label: string;
-}
-
-export interface SubModule {
-  /** Route to navigate to, e.g. "/pages/fetch-pages". */
-  to: string;
-  /** Label shown in the left rail. */
-  label: string;
-}
+import type { DocSection, SubModule } from '../types/doc';
 
 const props = defineProps<{
   /** The page title shown above the section list. */
@@ -105,14 +94,19 @@ function updateActiveFromScroll() {
   // can't scroll all the way to the top.
   const atBottom = scrollRoot.scrollTop + scrollRoot.clientHeight >= scrollRoot.scrollHeight - 2;
   if (atBottom) {
-    activeId.value = els[els.length - 1].id;
+    const last = els[els.length - 1];
+    if (last) {
+      activeId.value = last.id;
+    }
     return;
   }
 
   const rootTop = scrollRoot.getBoundingClientRect().top;
 
   // Active = the last section whose top has crossed the trigger line.
-  let current = els[0].id;
+  const first = els[0];
+  if (!first) return;
+  let current = first.id;
   for (const el of els) {
     const top = el.getBoundingClientRect().top - rootTop;
     if (top <= TRIGGER_OFFSET) current = el.id;

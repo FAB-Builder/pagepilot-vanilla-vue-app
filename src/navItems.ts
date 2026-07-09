@@ -7,6 +7,7 @@ import ContextHelpMenuIcon from './components/icons/ContextHelpMenuIcon.vue';
 import WebinarIcon from './components/icons/WebinarIcon.vue';
 import FormsIcon from './components/icons/FormsIcon.vue';
 import AppBannerIcon from './components/icons/AppBannerIcon.vue';
+import TemplatesIcon from './components/icons/TemplatesIcon.vue';
 
 export type IconComponent = Component;
 
@@ -70,5 +71,11 @@ export const navItems: NavItem[] = [
     label: 'App Banner',
     description: 'Render announcement banners — simple, carousel, modal, or floater — into your app by identifier.',
     icon: AppBannerIcon,
+  },
+  {
+    to: '/templates',
+    label: 'Templates',
+    description: 'Save any page as a reusable template and spin up new pages from it in seconds.',
+    icon: TemplatesIcon,
   },
 ];

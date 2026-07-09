@@ -1,4 +1,4 @@
-import type { SubModule } from '../../components/DocLayout.vue';
+import type { SubModule } from '@/types/doc';
 
 /**
  * Sub-modules of the "Pages" module. The left rail lists these; each is its
@@ -13,4 +13,4 @@ export const PAGES_SUBMODULES: SubModule[] = [
 ];
 
 /** Where /pages should land by default. */
-export const PAGES_DEFAULT = PAGES_SUBMODULES[0].to;
+export const PAGES_DEFAULT = PAGES_SUBMODULES[0]?.to ?? '/pages/fetch-pages';
