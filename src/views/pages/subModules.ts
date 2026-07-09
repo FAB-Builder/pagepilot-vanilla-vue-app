@@ -1,0 +1,16 @@
+import type { SubModule } from '@/types/doc';
+
+/**
+ * Sub-modules of the "Pages" module. The left rail lists these; each is its
+ * own route under /pages. Add new page components here as they're built.
+ */
+export const PAGES_SUBMODULES: SubModule[] = [
+  { to: '/pages/fetch-pages', label: 'Fetch Pages' },
+  { to: '/pages/template-variables', label: 'Create a Template' },
+  { to: '/pages/link-page-to-menu', label: 'Link a Page to a Menu' },
+  { to: '/pages/external-sections', label: 'External Sections' },
+  { to: '/pages/editor-css', label: 'Editor Block CSS' },
+];
+
+/** Where /pages should land by default. */
+export const PAGES_DEFAULT = PAGES_SUBMODULES[0]?.to ?? '/pages/fetch-pages';

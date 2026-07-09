@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* subtler default text color than pure black */
+    color: #1e293b;
+    /* prevent horizontal overflow on all screens */
+    overflow-x: hidden;
+  }
+
+  /* Inline code and highlighted text must wrap on small screens */
+  code {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  /* Long URLs and paths must break */
+  a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* All content containers should not overflow their parent */
+  p, li, td, th {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Firefox global slim scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.35) transparent;
+  }
+  /* WebKit/Chromium global scrollbar — slim 4px */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.35);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.55);
+  }
+  body {
+    @apply font-sans antialiased;
+    background-color: #fafafa;
+    color: #334155;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-ink;
+    letter-spacing: -0.011em;
+  }
+  ::selection {
+    background: rgba(68, 64, 204, 0.18);
+  }
+}
+
+/* The page (root) keeps the native scrollbar in the reserved gutter so it
+   never overlaps the sticky header. Inner scroll areas opt into a slim,
+   refined scrollbar via `.scroll-slim`. */
+@layer utilities {
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.35) transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.3);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.5);
+  }
+}

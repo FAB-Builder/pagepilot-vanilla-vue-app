@@ -1,15 +1,10 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ],
+  "files": ["env.d.ts", "src/shims-vue.d.ts"],
+  "include": ["src/**/*", "src/**/*.vue"],
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
+     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
     }
