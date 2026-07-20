@@ -206,6 +206,12 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
+html.dark .floating-translator-panel {
+  background: #111827;
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
 .floating-translator-panel.is-open {
   opacity: 1;
   visibility: visible;
@@ -282,6 +288,27 @@ onUnmounted(() => {
   color: #64748b;
   font-size: 13px;
   line-height: 1.5;
+}
+
+html.dark .floating-translator-help {
+  color: #94a3b8;
+}
+
+html.dark .floating-translator-panel-content .goog-te-gadget-simple {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+}
+html.dark .floating-translator-panel-content .goog-te-gadget-simple span {
+  color: #e2e8f0 !important;
+}
+html.dark .floating-translator-panel-content .goog-te-gadget-simple span[aria-hidden='true'] {
+  color: #94a3b8 !important;
+}
+html.dark .floating-translator-panel-content .goog-te-gadget-simple:hover {
+  background: #263449;
+  border-color: #6366f1;
 }
 
 .floating-translator-panel-content #google_translate_element {

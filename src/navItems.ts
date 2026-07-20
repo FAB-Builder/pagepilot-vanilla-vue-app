@@ -8,6 +8,7 @@ import WebinarIcon from './components/icons/WebinarIcon.vue';
 import FormsIcon from './components/icons/FormsIcon.vue';
 import AppBannerIcon from './components/icons/AppBannerIcon.vue';
 import TemplatesIcon from './components/icons/TemplatesIcon.vue';
+import BlocksIcon from './components/icons/BlocksIcon.vue';
 
 export type IconComponent = Component;
 
@@ -77,5 +78,11 @@ export const navItems: NavItem[] = [
     label: 'Templates',
     description: 'Save any page as a reusable template and spin up new pages from it in seconds.',
     icon: TemplatesIcon,
+  },
+  {
+    to: '/blocks',
+    label: 'Blocks',
+    description: 'Reference for every visual editor block — properties, action types, and how to configure them.',
+    icon: BlocksIcon,
   },
 ];
