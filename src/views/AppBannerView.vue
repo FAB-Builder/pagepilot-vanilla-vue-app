@@ -14,6 +14,7 @@ const SECTIONS: DocSection[] = [
   { id: 'ai-prompt', label: 'Integrate using AI' },
   { id: 'types', label: 'Banner types & demos' },
   { id: 'configure', label: 'Configuring a banner' },
+  { id: 'show-once', label: 'Show only once' },
   { id: 'api', label: 'API reference' },
 ];
 
@@ -49,6 +50,12 @@ const CONFIG_FIELDS: { field: string; type: string; description: string }[] = [
     description: 'Optional schedule window — the banner only shows live between these times.',
   },
   { field: 'isActive', type: 'boolean', description: 'Whether the banner is live. Inactive banners are not rendered.' },
+  {
+    field: 'oneTimeOnly',
+    type: 'boolean',
+    description:
+      'Show this banner only once per visitor. Turn it off if you want the banner to appear every time they visit the page.',
+  },
 ];
 
 const CONFIG_ROWS = CONFIG_FIELDS.map((f) => ({
@@ -244,6 +251,48 @@ const API_ROWS = [
           integration — the rest control content, styling, scheduling, and ordering.
         </p>
         <ApiTable :rows="CONFIG_ROWS" />
+      </section>
+
+      <section id="show-once" class="mb-12 scroll-mt-24">
+        <h2 class="mb-4 border-b border-slate-200 pb-2 text-xl font-bold">Show only once</h2>
+        <p class="mb-4 leading-relaxed text-slate-600">
+          By default a banner keeps showing every time a visitor loads a matching page. Turn on
+          <strong>Show Only Once</strong> to have it show a single time per visitor — once they
+          see it (and dismiss it, click it, or navigate away), it won't be rendered again
+          for that same visitor.
+        </p>
+        <h3 class="mt-6 font-semibold text-slate-800">Where to set it</h3>
+        <ol class="mt-2 space-y-3 leading-relaxed text-slate-600">
+          <li class="flex gap-3">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">1</span>
+            <span>
+              Open <strong>Page Pilot → App Banners</strong> and select the banner you want to
+              configure (or create a new one).
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">2</span>
+            <span>
+              Open the banner in the editor and click <strong>Publish</strong> (or the Save /
+              Settings action) to open the publish dialog.
+            </span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">3</span>
+            <span>
+              In the publish dialog, toggle <strong>Show Only Once</strong> on or off, then save.
+              The change applies the next time the banner is fetched — no code changes are
+              needed on your end.
+            </span>
+          </li>
+        </ol>
+        <p class="mt-4 leading-relaxed text-slate-600">
+          This is a per-banner setting authored in Page Pilot, not a parameter of
+          <code class="rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">renderAppBanner()</code>
+          — your integration code stays the same either way. "Once per visitor" is tracked
+          against the visitor identity AHDjs already uses for the rest of your integration, so no
+          extra setup is required.
+        </p>
       </section>
 
       <section id="api" class="mb-12 scroll-mt-24">
