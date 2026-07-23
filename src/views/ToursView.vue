@@ -489,6 +489,38 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
           <PropertyCard type="boolean" defaultValue="false">
             <span id="show-once-prop">Show the tour only once per visitor.</span>
           </PropertyCard>
+
+          <h3 id="show-once-where-heading" class="mt-6 text-base font-semibold text-ink">
+            Where to set it
+          </h3>
+          <ol id="show-once-where-steps" class="mt-2 space-y-3 leading-relaxed text-slate-600">
+            <li class="flex gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">1</span>
+              <span>
+                Open the tour in <strong>Page Pilot → Tours</strong> and click
+                <strong>Edit Design</strong> to enter the tour editor.
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">2</span>
+              <span>
+                Click <strong>Publish</strong> to open the publish dialog.
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">3</span>
+              <span>
+                Toggle <strong>Show Only Once</strong> on or off, then save. The change applies
+                the next time the tour is fetched — no code changes are needed on your end.
+              </span>
+            </li>
+          </ol>
+          <p id="show-once-where-note" class="mt-4">
+            This is a per-tour setting authored in Page Pilot, not a parameter of
+            <code id="show-once-where-method" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">showHighlights()</code>. "Once per visitor" is
+            tracked against the <code id="show-once-where-visitor" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">visitorId</code> you pass when
+            initializing the SDK, so make sure it's a stable, unique id per user.
+          </p>
         </div>
       </section>
 
