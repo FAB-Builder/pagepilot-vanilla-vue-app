@@ -10,8 +10,8 @@ import PropertyCard from '../components/PropertyCard.vue';
 import AiPromptBlock from '../components/AiPromptBlock.vue';
 
 /**
- * The slug a tour is attached to. In PagePilot a "Target Page" is just a
- * slug; the tour for this demo is published against the `/tours` slug.
+ * The Target Page a tour is attached to. In PagePilot a "Target Page" is
+ * just a URL path; the tour for this demo is published against `/tours`.
  */
 const TOUR_SLUG = '/tours';
 
@@ -113,7 +113,7 @@ const METHOD_ROWS = [
   },
   {
     property: 'showHighlights(slug, refetch)',
-    description: 'Renders the tour / highlights published for the given slug.',
+    description: 'Renders the tour / highlights published for the given target page.',
     type: '(slug: string, refetch: boolean) => Promise<void>',
   },
   {
@@ -230,7 +230,7 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
         <div id="live-demo-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="live-demo-text">
             Press <strong id="live-demo-cta-text">Start Tour</strong> to run the tour published
-            against the <code id="live-demo-slug" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">{{ TOUR_SLUG }}</code> slug for this demo app. It
+            against the <code id="live-demo-slug" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">{{ TOUR_SLUG }}</code> target page for this demo app. It
             highlights the sample buttons below.
           </p>
           <DemoBlock title="Start a tour" :code="LIVE_DEMO_CODE">
@@ -330,7 +330,7 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
           <DemoBlock title="Initialize and run a tour" :code="BASIC_CODE">
             <template #description>
               <code id="integration-react-method" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">showHighlights("{{ TOUR_SLUG }}", true)</code>
-              renders the tour for that slug once the sitemap is ready.
+              renders the tour for that target page once the sitemap is ready.
             </template>
           </DemoBlock>
         </div>
@@ -353,14 +353,20 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
         <h2 id="target-page-heading" style="width: fit-content" class="mb-4 pb-2 text-xl font-bold">Target Page</h2>
         <div id="target-page-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="target-page-text">
-            The page (slug) where the tour appears. PagePilot matches the visitor's current URL path
-            against this slug; when it matches, the tour renders. It must start with a
-            <code id="target-page-slash" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/</code>.
+            Don't type your site's full URL here — just the page path. Say your app is live at
+            <code id="target-page-live-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">https://pagepilot.com/pricing</code>. The
+            Target Page is only the part after the domain:
+            <code id="target-page-slug-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/pricing</code>. PagePilot matches the visitor's
+            current URL path against this value; when it matches, the tour renders. It must start
+            with a <code id="target-page-slash" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/</code>.
           </p>
           <PropertyCard type="string" :required="true" defaultValue="'/'">
             <span id="target-page-prop">
               The URL path the tour is bound to, e.g. <code id="target-page-eg1" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/dashboard</code> or
-              <code id="target-page-eg2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/tours</code>. In code this is the first argument to
+              <code id="target-page-eg2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/tours</code> (this docs site's own tour runs on
+              <code id="target-page-eg3" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/tours</code>, not the full
+              <code id="target-page-eg4" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">https://fab-builder.github.io/pagepilot-vanilla-react-app/tours</code>
+              URL). In code this is the first argument to
               <code id="target-page-method" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">showHighlights(slug, refetch)</code>.
             </span>
           </PropertyCard>
@@ -371,14 +377,15 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
         <h2 id="alt-target-page-heading" style="width: fit-content" class="mb-4 pb-2 text-xl font-bold">Alternative Target Page</h2>
         <div id="alt-target-page-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="alt-target-page-text">
-            Additional slugs the same tour should also run on. Useful when the same screen is reached
-            via multiple URLs (e.g. <code id="alt-eg1" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/home</code> and
-            <code id="alt-eg2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/dashboard</code>). Each alternative must also start with
+            Additional page paths the same tour should also run on — same rule as Target Page, just
+            the path, not the full URL. Useful when the same screen is reached via multiple routes,
+            e.g. a store reachable at both <code id="alt-eg1" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/home</code> and
+            <code id="alt-eg2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/pricing</code>. Each alternative must also start with
             <code id="alt-slash" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/</code>.
           </p>
           <PropertyCard type="string[]" defaultValue="[]">
             <span id="alt-target-page-prop">
-              A list of extra page slugs. The tour shows if the current URL matches the Target Page
+              A list of extra target pages. The tour shows if the current URL matches the Target Page
               <em>or</em> any alternative.
             </span>
           </PropertyCard>
@@ -389,17 +396,26 @@ await ahdJs.showHighlights('${TOUR_SLUG}', true);`;
         <h2 id="selector-heading" style="width: fit-content" class="mb-4 pb-2 text-xl font-bold">Element / Selector</h2>
         <div id="selector-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="selector-text">
-            Per step, the <strong id="selector-element-id">Element ID</strong> (CSS selector) of the
-            element to highlight. The tooltip anchors to this element. On this demo page the
-            selectors are <code id="selector-eg-create" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#demo-create</code>,
+            Per step, the <strong id="selector-element-id">Element ID</strong> is the CSS selector of
+            the on-page element to highlight — the same <code id="selector-id-attr" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">id</code> or
+            <code id="selector-class-attr" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">class</code> attribute you'd already have in your HTML,
+            written with its CSS prefix. An
+            <code id="selector-id-format" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">id="add-to-cart"</code> attribute becomes the selector
+            <code id="selector-id-format-2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#add-to-cart</code>; a
+            <code id="selector-class-format" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">class="add-to-cart-btn"</code> attribute becomes
+            <code id="selector-class-format-2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">.add-to-cart-btn</code>. The tooltip anchors to this
+            element. On this demo page the selectors are
+            <code id="selector-eg-create" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#demo-create</code>,
             <code id="selector-eg-search" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#demo-search</code>,
             <code id="selector-eg-settings" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#demo-settings</code> and
             <code id="selector-eg-profile" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#demo-profile</code>.
           </p>
           <PropertyCard type="string" :required="true">
             <span id="selector-prop">
-              Any valid CSS selector. If the element isn't present when the tour runs, that step is
-              skipped.
+              Any valid CSS selector — ID (<code id="selector-prop-id-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#element-id</code>) or class
+              (<code id="selector-prop-class-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">.class-name</code>). The step isn't skipped if the
+              element can't be found — instead that step just shows in the middle of the screen
+              instead of pointing at anything, so double check your selector is correct.
             </span>
           </PropertyCard>
         </div>
