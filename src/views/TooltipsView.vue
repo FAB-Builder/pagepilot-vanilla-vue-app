@@ -152,7 +152,7 @@ const METHOD_ROWS = [
   },
   {
     property: 'showHighlights(slug, refetch)',
-    description: 'Registers and renders all tooltips (and tours) published for the given slug.',
+    description: 'Registers and renders all tooltips (and tours) published for the given target page.',
     type: '(slug: string, refetch: boolean) => Promise<void>',
   },
   { property: 'stop()', description: 'Removes all active tooltips from the page.', type: '() => void' },
@@ -276,7 +276,7 @@ export function useTooltips(slug) {
             element. You configure its <strong id="overview-trigger">trigger behaviour</strong> (what makes it appear), its
             <strong id="overview-placement">placement</strong> relative to the element, and its
             <strong id="overview-style">visual style</strong>. PagePilot resolves which tooltips to
-            show based on the current page slug.
+            show based on the current target page.
           </p>
         </div>
       </section>
@@ -285,7 +285,7 @@ export function useTooltips(slug) {
         <h2 id="live-demo-heading" class="mb-4 w-fit border-b border-slate-200 pb-2 text-xl font-bold">Live demo</h2>
         <div id="live-demo-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="live-demo-text" style="width: fit-content">
-            The tooltips published against the <code id="live-demo-slug" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">{{ TOOLTIP_SLUG }}</code> slug
+            The tooltips published against the <code id="live-demo-slug" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">{{ TOOLTIP_SLUG }}</code> target page
             load <strong id="live-demo-cta-text">automatically</strong> as soon as you open this
             page — exactly as they would on a real route. Hover or click the sample buttons below to
             see them in action.
@@ -330,7 +330,7 @@ export function useTooltips(slug) {
           <p id="integration-text">
             Tooltips use the exact same SDK call as tours —
             <code id="integration-method" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">showHighlights(slug, true)</code>. PagePilot looks up
-            everything published for that slug (tooltips and tours) and renders it. So if you've
+            everything published for that target page (tooltips and tours) and renders it. So if you've
             already wired PagePilot for tours, tooltips work with no extra code.
           </p>
 
@@ -356,7 +356,7 @@ export function useTooltips(slug) {
           <h3 id="integration-react-heading" class="mt-6 text-base font-semibold text-ink">Vue app (npm)</h3>
           <p id="integration-react-text" class="text-sm text-slate-600">
             Call <code id="integration-react-method" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">showHighlights("{{ TOOLTIP_SLUG }}", true)</code>
-            after the page mounts to register every tooltip published for that slug.
+            after the page mounts to register every tooltip published for that target page.
           </p>
           <DemoBlock
             title="Initialize and load tooltips"
@@ -382,9 +382,13 @@ export function useTooltips(slug) {
         <h2 id="target-page-heading" class="mb-4 w-fit border-b border-slate-200 pb-2 text-xl font-bold">Target Page</h2>
         <div id="target-page-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="target-page-text">
-            The page slug where the tooltip is active. PagePilot matches the visitor's URL path
-            against this value; when it matches, the tooltip is registered on the page. It must
-            start with a <code id="target-page-slash" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/</code>.
+            This is not your site's full URL — it's just the page path. For example, if your app is
+            live at
+            <code id="target-page-live-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">https://pagepilot.com/pricing</code>, the
+            Target Page is just <code id="target-page-slug-eg" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/pricing</code> — everything
+            after the domain. PagePilot matches the visitor's current URL path against this value;
+            when it matches, the tooltip is registered on the page. It must start with a
+            <code id="target-page-slash" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">/</code>.
           </p>
           <PropertyCard type="string" :required="true" defaultValue="'/'">
             <span id="target-page-prop">
@@ -396,8 +400,9 @@ export function useTooltips(slug) {
           </PropertyCard>
           <PropertyCard type="string[]" defaultValue="[]">
             <span id="alt-slugs-prop">
-              <strong>Alternative slugs</strong> — additional paths the same tooltip should appear
-              on. Useful when the same screen is accessible via multiple routes.
+              <strong>Alternative target pages</strong> — additional paths (same rule: path only, not
+              the full URL) the same tooltip should appear on. Useful when the same screen is
+              accessible via multiple routes.
             </span>
           </PropertyCard>
         </div>
@@ -407,7 +412,13 @@ export function useTooltips(slug) {
         <h2 id="selector-heading" class="mb-4 w-fit border-b border-slate-200 pb-2 text-xl font-bold">Element / Selector</h2>
         <div id="selector-body" class="space-y-3 leading-relaxed text-slate-600">
           <p id="selector-text">
-            The CSS selector for the element the tooltip is anchored to. The tooltip card and any
+            The CSS selector for the element the tooltip is anchored to — in plain terms, the
+            <code id="selector-html-id" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">id</code> or class already on the HTML element you want to
+            point at, written CSS-style. An element with
+            <code id="selector-id-format" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">id="invite-button"</code> in your markup becomes the
+            selector <code id="selector-id-format-2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">#invite-button</code>; a class of
+            <code id="selector-class-format" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">class="invite-button"</code> becomes
+            <code id="selector-class-format-2" class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">.invite-button</code>. The tooltip card and any
             optional trigger icon are positioned relative to this element.
           </p>
           <PropertyCard type="string" :required="true">
