@@ -26,7 +26,7 @@ const SECTIONS: DocSection[] = [
 ];
 
 const SHARE_LINK_ROWS = [
-  { property: 'tid', description: 'Your PagePilot tenant ID.', type: 'string' },
+  { property: 'tid', description: 'Your Page Pilot workspace id.', type: 'string' },
   { property: 'did', description: 'The demo record ID.', type: 'string' },
   { property: 'type', description: 'Always "demo".', type: "'demo'" },
   { property: 'status', description: 'Always "live".', type: "'live'" },
@@ -93,20 +93,20 @@ Add the following responsive iframe embed to the page where the demo should appe
 <div style="position:relative;padding-bottom:calc(54.75% + 25px);width:100%;height:0;">
   <iframe
     loading="lazy"
-    src="https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_TENANT_ID&did=YOUR_DEMO_ID&type=demo&status=live"
+    src="https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_WORKSPACE_ID&did=YOUR_DEMO_ID&type=demo&status=live"
     style="position:absolute;top:0;left:0;width:100%;height:100%;"
     frameborder="0"
     allowfullscreen
   ></iframe>
 </div>
 
-Replace YOUR_TENANT_ID and YOUR_DEMO_ID with the values shown in the PagePilot admin integration dialog after publishing the demo.
+Replace YOUR_WORKSPACE_ID and YOUR_DEMO_ID with the values shown in the PagePilot admin integration dialog after publishing the demo.
 
 If my project uses Vue, convert the markup into a <script setup lang="ts"> + <template> component with the style attribute written as a Vue inline style binding.
 
 Detect my framework (React, Next.js, Vue, plain HTML, etc.) and produce the embed in the correct syntax.`;
 
-const SHARE_LINK = `https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_TENANT_ID&did=YOUR_DEMO_ID&type=demo&status=live`;
+const SHARE_LINK = `https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_WORKSPACE_ID&did=YOUR_DEMO_ID&type=demo&status=live`;
 
 const EMBED_CODE = `<script setup lang="ts">
 <\/script>
@@ -115,7 +115,7 @@ const EMBED_CODE = `<script setup lang="ts">
   <div style="position: relative; padding-bottom: calc(54.75% + 25px); width: 100%; height: 0">
     <iframe
       loading="lazy"
-      src="https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_TENANT_ID&did=YOUR_DEMO_ID&type=demo&status=live"
+      src="https://pagepilot-demo-viewer-prod.web.app/?tid=YOUR_WORKSPACE_ID&did=YOUR_DEMO_ID&type=demo&status=live"
       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
       frameborder="0"
       allowfullscreen
@@ -275,7 +275,7 @@ onUnmounted(() => window.removeEventListener('message', handleMessage));
             :code="EMBED_CODE"
           />
           <p class="text-sm text-slate-600">
-            Replace <code class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">YOUR_TENANT_ID</code> and <code class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">YOUR_DEMO_ID</code> with the values shown
+            Replace <code class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">YOUR_WORKSPACE_ID</code> and <code class="inline-block max-w-full break-all rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">YOUR_DEMO_ID</code> with the values shown
             in the PagePilot admin after publishing.
           </p>
         </div>

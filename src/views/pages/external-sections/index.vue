@@ -55,7 +55,8 @@ const SECTIONS: DocSection[] = [
         </p>
         <p>
           Page Pilot generates that identifier for you in the form
-          <Code>section-&lt;timestamp&gt;</Code> (e.g. <Code>section-1782448678097</Code>). When you
+          <Code>section-&lt;timestamp&gt;</Code> — yours will be different, so always copy it from
+          the editor rather than typing one from these examples. When you
           loop over the sections, you render internal ones as-is and swap in your own component
           wherever you find a matching external identifier — a live pricing widget, a personalised
           greeting, a third-party embed. Page Pilot owns the <em>slot</em>; you own the
@@ -159,9 +160,8 @@ const SECTIONS: DocSection[] = [
           </li>
           <li>
             <strong class="text-ink">5. Save</strong> — the section is created with an
-            auto-generated identifier of the form <Code>section-&lt;timestamp&gt;</Code> (e.g.
-            <Code>section-1782448678097</Code>) and tagged with an <strong>External</strong> chip in
-            the dropdown.
+            auto-generated identifier of the form <Code>section-&lt;timestamp&gt;</Code> and tagged
+            with an <strong>External</strong> chip in the dropdown.
           </li>
         </ol>
         <div class="rounded-xl border border-slate-200 bg-white p-4 text-sm text-slate-600">
@@ -185,9 +185,9 @@ const SECTIONS: DocSection[] = [
         <div class="my-3">
           <CodeSnippet
             language="vue"
-            code="<!-- The external section's identifier — copied from the editor. -->
+            code="<!-- Paste the identifier you copied from the editor. -->
 <script setup lang=&quot;ts&quot;>
-const SUBSCRIPTION_PLANS = 'section-1782448678097';
+const SUBSCRIPTION_PLANS = 'YOUR_SECTION_IDENTIFIER';
 <\/script>
 
 <template>
@@ -225,7 +225,7 @@ const SUBSCRIPTION_PLANS = 'section-1782448678097';
           <CodeSnippet
             language="text"
             code="Section 1  &quot;Intro&quot;    → internal (designed on the canvas)
-Section 2  &quot;Plans&quot;    → external (id: section-1782448678097)"
+Section 2  &quot;Plans&quot;    → external (identifier copied from the editor)"
           />
         </div>
         <div class="my-3">
@@ -237,7 +237,7 @@ import { ref, onMounted } from 'vue';
 import YourComponent from './YourComponent.vue';
 
 // Your external section's identifier (copied from the editor).
-const PLANS = 'section-1782448678097';
+const PLANS = 'YOUR_SECTION_IDENTIFIER';
 
 const pageInfo = ref<any>(null);
 

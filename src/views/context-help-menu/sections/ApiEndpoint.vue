@@ -2,6 +2,7 @@
 import Section from '../../../components/doc/Section.vue';
 import Code from '../../../components/doc/Code.vue';
 import DemoBlock from '../../../components/DemoBlock.vue';
+import WorkspaceIdLink from '../../../components/WorkspaceIdLink.vue';
 import { FETCH_MENU_CODE } from '../snippets';
 </script>
 
@@ -13,8 +14,8 @@ import { FETCH_MENU_CODE } from '../snippets';
     <pre class="rounded-lg bg-slate-100 px-4 py-3 font-mono text-sm text-slate-700">GET /api/tenant/{WORKSPACE_ID}/menu-by-name/{MENU_NAME}</pre>
     <ul class="ml-4 list-disc space-y-1">
       <li>
-        <Code>WORKSPACE_ID</Code> — your Page Pilot workspace id. Find it in
-        <strong>Page Pilot → Settings → General</strong>.
+        <Code>WORKSPACE_ID</Code> — your Page Pilot workspace id, from
+        <WorkspaceIdLink />.
       </li>
       <li>
         <Code>MENU_NAME</Code> — the <strong>name</strong> you gave the menu when you created it
