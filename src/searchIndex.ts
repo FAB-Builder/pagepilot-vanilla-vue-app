@@ -207,6 +207,7 @@ const SECTION_INDEX: Record<string, { id: string; label: string }[]> = {
     { id: 'app-banner', label: 'App Banner' },
     { id: 'demos', label: 'Demos' },
     { id: 'context-help-menu', label: 'Context Help Menu' },
+    { id: 'render-content', label: 'Rendering page content safely' },
     { id: 'spa-routing', label: 'SPA routing (Vue Router)' },
     { id: 'caching', label: 'Stale or cached content' },
     { id: 'testing', label: 'Testing without affecting visitors' },

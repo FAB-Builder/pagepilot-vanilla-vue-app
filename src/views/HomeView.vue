@@ -124,7 +124,7 @@ function groupItems(routes: string[]): NavItem[] {
             </div>
 
             <span class="flex items-center gap-1 text-sm font-semibold text-brand">
-              {{ item.to === '/webinar' ? 'View docs' : 'View demo' }}
+              {{ item.to === '/webinar' ? 'View docs' : item.to === '/troubleshooting' ? 'View' : 'View demo' }}
               <ArrowRight :size="14" class="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </RouterLink>
