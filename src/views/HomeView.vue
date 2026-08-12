@@ -27,6 +27,11 @@ const GROUPS: { title: string; blurb: string; routes: string[] }[] = [
     blurb: 'Guide, announce, and show your product in action.',
     routes: ['/tours', '/tooltips', '/demos', '/app-banner', '/webinar'],
   },
+  {
+    title: 'Help',
+    blurb: 'When something in your integration isn\'t working as expected.',
+    routes: ['/troubleshooting'],
+  },
 ];
 
 const byRoute = new Map(navItems.map((item) => [item.to, item]));

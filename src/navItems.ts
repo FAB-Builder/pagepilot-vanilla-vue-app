@@ -9,6 +9,7 @@ import FormsIcon from './components/icons/FormsIcon.vue';
 import AppBannerIcon from './components/icons/AppBannerIcon.vue';
 import TemplatesIcon from './components/icons/TemplatesIcon.vue';
 import BlocksIcon from './components/icons/BlocksIcon.vue';
+import TroubleshootingIcon from './components/icons/TroubleshootingIcon.vue';
 
 export type IconComponent = Component;
 
@@ -84,5 +85,11 @@ export const navItems: NavItem[] = [
     label: 'Blocks',
     description: 'Reference for every visual editor block — properties, action types, and how to configure them.',
     icon: BlocksIcon,
+  },
+  {
+    to: '/troubleshooting',
+    label: 'Troubleshooting',
+    description: 'Fixes for the problems people actually hit integrating Tours, Tooltips, and App Banners in a Vue app.',
+    icon: TroubleshootingIcon,
   },
 ];

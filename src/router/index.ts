@@ -7,6 +7,7 @@ import TooltipsView from '../views/TooltipsView.vue'
 import TemplatesView from '../views/TemplatesView.vue'
 import FormsView from '../views/FormsView.vue'
 import AppBannerView from '../views/AppBannerView.vue'
+import TroubleshootingView from '../views/TroubleshootingView.vue'
 import ContextHelpMenuView from '../views/context-help-menu/index.vue'
 import WebinarView from '../views/webinar/index.vue'
 import FetchPagesView from '../views/pages/fetch-pages/index.vue'
@@ -81,6 +82,7 @@ const router = createRouter({
         { path: 'webinar', component: WebinarView },
         { path: 'forms', component: FormsView },
         { path: 'app-banner', component: AppBannerView },
+        { path: 'troubleshooting', component: TroubleshootingView },
         // Blocks module — redirects to its first sub-module
         { path: 'blocks', redirect: BLOCKS_DEFAULT },
         { path: 'blocks/heading', component: HeadingBlockView },
