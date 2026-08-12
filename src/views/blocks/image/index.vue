@@ -15,6 +15,7 @@ const SECTIONS: DocSection[] = [
   { id: 'link', label: 'Link' },
   { id: 'alt', label: 'Alt text & accessibility' },
   { id: 'responsive', label: 'Per-device behaviour' },
+  { id: 'animation', label: 'Animation' },
 ];
 </script>
 
@@ -129,6 +130,47 @@ const SECTIONS: DocSection[] = [
         <BlockCallout title="Not per-device">
           Background color, the link URL, the decorative toggle, and alt text stay shared —
           hidden on the Tablet/Mobile tabs.
+        </BlockCallout>
+      </Section>
+
+      <Section id="animation" title="Animation">
+        <p>
+          This block can animate into view. Set it up in the
+          <strong>Animation</strong> section of the sidebar.
+        </p>
+        <PropertyCard type="enum" default-value="none">
+          <strong>Type</strong> — <Code>fade-in</Code>, <Code>slide-left</Code>,
+          <Code>slide-right</Code>, <Code>slide-up</Code>, <Code>slide-down</Code>,
+          <Code>zoom-in</Code> or <Code>bounce</Code>.
+        </PropertyCard>
+        <PropertyCard type="enum" default-value="load">
+          <strong>Trigger</strong> — <Code>load</Code> plays immediately;
+          <Code>scroll</Code> waits until the element enters the viewport;
+          <Code>hover</Code> and <Code>click</Code> play on interaction.
+        </PropertyCard>
+        <PropertyCard type="enum" default-value="medium">
+          <strong>Speed</strong> — <Code>slow</Code> (1.2s), <Code>medium</Code> (0.7s) or
+          <Code>fast</Code> (0.35s).
+        </PropertyCard>
+        <PropertyCard type="number (0–10000)" default-value="0">
+          <strong>Delay</strong> — milliseconds before it plays. Use it to stagger several
+          elements.
+        </PropertyCard>
+        <PropertyCard type="boolean" default-value="false">
+          <strong>Disable on mobile</strong> — skips the animation at mobile width.
+        </PropertyCard>
+        <BlockCallout variant="warning" title="Animations need a runtime script">
+          Motion is powered by <Code>pagePilotAnimation.js</Code>. Tick it in the Publish
+          dialog's <strong>Scripts &amp; Styles</strong> tab, or load it from your app shell
+          if you inject the HTML yourself — see
+          <RouterLink class="text-brand hover:underline" to="/pages/runtime-scripts">
+            Runtime Scripts &amp; Animations
+          </RouterLink>
+          . Without it the element renders normally, just without the motion.
+        </BlockCallout>
+        <BlockCallout variant="tip" title="Nothing shifts">
+          Animations only use <Code>transform</Code> and <Code>opacity</Code>, so they can never
+          reflow the page. Visitors with reduced-motion enabled get no animation automatically.
         </BlockCallout>
       </Section>
     </article>

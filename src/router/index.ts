@@ -7,6 +7,7 @@ import TooltipsView from '../views/TooltipsView.vue'
 import TemplatesView from '../views/TemplatesView.vue'
 import FormsView from '../views/FormsView.vue'
 import AppBannerView from '../views/AppBannerView.vue'
+import TroubleshootingView from '../views/TroubleshootingView.vue'
 import ContextHelpMenuView from '../views/context-help-menu/index.vue'
 import WebinarView from '../views/webinar/index.vue'
 import FetchPagesView from '../views/pages/fetch-pages/index.vue'
@@ -14,6 +15,8 @@ import TemplateVariablesView from '../views/pages/template-variables/index.vue'
 import LinkPageToMenuView from '../views/pages/link-page-to-menu/index.vue'
 import EditorCssView from '../views/pages/editor-css/index.vue'
 import ExternalSectionsView from '../views/pages/external-sections/index.vue'
+import RuntimeScriptsView from '../views/pages/runtime-scripts/index.vue'
+import BuildTriggersView from '../views/pages/build-triggers/index.vue'
 import { PAGES_DEFAULT } from '../views/pages/subModules'
 import HeadingBlockView from '../views/blocks/heading/index.vue'
 import TextBlockView from '../views/blocks/text/index.vue'
@@ -40,6 +43,18 @@ import MarqueeBlockView from '../views/blocks/marquee/index.vue'
 import DividerBlockView from '../views/blocks/divider/index.vue'
 import SpacerBlockView from '../views/blocks/spacer/index.vue'
 import HtmlBlockView from '../views/blocks/html/index.vue'
+import ProgressBlockView from '../views/blocks/progress/index.vue'
+import BreadcrumbBlockView from '../views/blocks/breadcrumb/index.vue'
+import RatingBlockView from '../views/blocks/rating/index.vue'
+import AccessibilityToolsBlockView from '../views/blocks/accessibility-tools/index.vue'
+import SkipLinkBlockView from '../views/blocks/skip-link/index.vue'
+import MenuPickerBlockView from '../views/blocks/menu-picker/index.vue'
+import FormsPickerBlockView from '../views/blocks/forms-picker/index.vue'
+import DemoPickerBlockView from '../views/blocks/demo-picker/index.vue'
+import AppBannerPickerBlockView from '../views/blocks/app-banner-picker/index.vue'
+import CalendlyBlockView from '../views/blocks/calendly/index.vue'
+import TimerBlockView from '../views/blocks/timer/index.vue'
+import IframeBlockView from '../views/blocks/iframe/index.vue'
 import { BLOCKS_DEFAULT } from '../views/blocks/subModules'
 
 const router = createRouter({
@@ -61,10 +76,13 @@ const router = createRouter({
         { path: 'pages/link-page-to-menu', component: LinkPageToMenuView },
         { path: 'pages/editor-css', component: EditorCssView },
         { path: 'pages/external-sections', component: ExternalSectionsView },
+        { path: 'pages/runtime-scripts', component: RuntimeScriptsView },
+        { path: 'pages/build-triggers', component: BuildTriggersView },
         { path: 'context-help-menu', component: ContextHelpMenuView },
         { path: 'webinar', component: WebinarView },
         { path: 'forms', component: FormsView },
         { path: 'app-banner', component: AppBannerView },
+        { path: 'troubleshooting', component: TroubleshootingView },
         // Blocks module — redirects to its first sub-module
         { path: 'blocks', redirect: BLOCKS_DEFAULT },
         { path: 'blocks/heading', component: HeadingBlockView },
@@ -92,6 +110,18 @@ const router = createRouter({
         { path: 'blocks/divider', component: DividerBlockView },
         { path: 'blocks/spacer', component: SpacerBlockView },
         { path: 'blocks/html', component: HtmlBlockView },
+        { path: 'blocks/progress', component: ProgressBlockView },
+        { path: 'blocks/breadcrumb', component: BreadcrumbBlockView },
+        { path: 'blocks/rating', component: RatingBlockView },
+        { path: 'blocks/accessibility-tools', component: AccessibilityToolsBlockView },
+        { path: 'blocks/skip-link', component: SkipLinkBlockView },
+        { path: 'blocks/menu-picker', component: MenuPickerBlockView },
+        { path: 'blocks/forms-picker', component: FormsPickerBlockView },
+        { path: 'blocks/demo-picker', component: DemoPickerBlockView },
+        { path: 'blocks/app-banner-picker', component: AppBannerPickerBlockView },
+        { path: 'blocks/calendly', component: CalendlyBlockView },
+        { path: 'blocks/timer', component: TimerBlockView },
+        { path: 'blocks/iframe', component: IframeBlockView },
         // Unknown slug → send the user back home
         { path: ':pathMatch(.*)*', redirect: '/' },
       ],

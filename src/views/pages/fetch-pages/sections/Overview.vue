@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Section from '../../../../components/doc/Section.vue';
 import Code from '../../../../components/doc/Code.vue';
+import CaseStudyCallout from '../../../../components/CaseStudyCallout.vue';
 import { LEAD_APPLICATION_ID, PAGEPILOT_APP_URL } from '../../../../lib/ahd';
 </script>
 
@@ -16,6 +17,15 @@ import { LEAD_APPLICATION_ID, PAGEPILOT_APP_URL } from '../../../../lib/ahd';
       This works the same way the FabBuilder website renders its blog: it requests the
       <Code>website-blogs</Code> page and, alongside it, a filtered list of blog pages to show in
       the grid.
+    </p>
+
+    <CaseStudyCallout />
+
+    <p>
+      That site is worth opening next to this page. Its entire routing layer is a single
+      catch-all route that asks Page Pilot for the list of live slugs at build time, then
+      renders each one by calling <Code>/pagebyslug/{slug}</Code>. Adding a page to the site
+      means creating a page in Page Pilot; no route file is written, and no code is deployed.
     </p>
     <p>
       Requests are scoped to your <strong>workspace&nbsp;id</strong>. Replace

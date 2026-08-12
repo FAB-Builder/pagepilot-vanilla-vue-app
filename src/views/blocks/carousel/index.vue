@@ -35,6 +35,15 @@ const SECTIONS: DocSection[] = [
           A new Carousel starts with three slides showing three at a time on desktop, two on
           tablet, and one on mobile. Up to twenty slides.
         </p>
+        <BlockCallout variant="warning" title="This block needs a runtime script">
+          Arrows, dots, autoplay and touch swipe are powered by <Code>pagePilotCarousel.js</Code>, hosted by Page Pilot. Tick it in the
+          Publish dialog's <strong>Scripts &amp; Styles</strong> tab — and if your app embeds
+          the page by injecting raw HTML, load it from your app shell instead. See
+          <RouterLink class="text-brand hover:underline" to="/pages/runtime-scripts">
+            Runtime Scripts &amp; Animations
+          </RouterLink>
+          . Without it the first slide shows and the controls do nothing — the block degrades, it does not break.
+        </BlockCallout>
       </Section>
 
       <Section id="behavior" title="Behaviour">

@@ -14,9 +14,9 @@
 import { ref, reactive, computed, watch } from 'vue';
 import { ChevronLeft, X, CircleQuestionMark, LoaderCircle, CircleAlert, FileX } from '@lucide/vue';
 import HelpMenuTree from './HelpMenuTree.vue';
-import { pagePilotApiBase } from '../../../lib/ahd';
+import { pagePilotApiBase, DEMO_APPLICATION_ID } from '../../../lib/ahd';
 
-const API_BASE = pagePilotApiBase('64d2b934c6cfdc96aa3734c5');
+const API_BASE = pagePilotApiBase(DEMO_APPLICATION_ID);
 const MENU_API = `${API_BASE}/menu-by-name/fab-docs-site`;
 const CACHE_KEY = 'pp_help_menu_fab_docs_site';
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour — same as ahd-fe useStickyState
