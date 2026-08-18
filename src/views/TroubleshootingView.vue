@@ -11,6 +11,7 @@ const SECTIONS: DocSection[] = [
   { id: 'app-banner', label: 'App Banner' },
   { id: 'demos', label: 'Demos' },
   { id: 'context-help-menu', label: 'Context Help Menu' },
+  { id: 'render-content', label: 'Rendering page content safely' },
   { id: 'spa-routing', label: 'SPA routing (Vue Router)' },
   { id: 'caching', label: 'Stale or cached content' },
   { id: 'testing', label: 'Testing without affecting visitors' },
@@ -65,6 +66,69 @@ onMounted(async () => {
   await ahdJs.renderAppBanner('FAB_BANNER_TYPE_SIMPLE', true);
 });
 <\/script>`;
+
+const CSS_LEAK_BEFORE = `<script setup lang="ts">
+import DOMPurify from 'dompurify';
+
+defineProps<{ html: string }>();
+<\/script>
+
+<template>
+  <div v-html="DOMPurify.sanitize(html)" />
+</template>`;
+
+const CSS_LEAK_AFTER = `<script setup lang="ts">
+import { ref, watch } from 'vue';
+import DOMPurify from 'dompurify';
+
+const props = defineProps<{ html: string }>();
+const hostRef = ref<HTMLDivElement | null>(null);
+
+watch(
+  () => props.html,
+  (html) => {
+    if (!hostRef.value) return;
+    const root = hostRef.value.shadowRoot ?? hostRef.value.attachShadow({ mode: 'open' });
+    root.innerHTML = DOMPurify.sanitize(html);
+  },
+  { immediate: true },
+);
+<\/script>
+
+<template>
+  <div ref="hostRef" />
+</template>`;
+
+const OWN_CSS_OVERRIDE_CODE = `<script setup lang="ts">
+import { ref, watch } from 'vue';
+import DOMPurify from 'dompurify';
+
+const props = defineProps<{ html: string }>();
+const hostRef = ref<HTMLDivElement | null>(null);
+
+watch(
+  () => props.html,
+  (html) => {
+    if (!hostRef.value) return;
+    const root = hostRef.value.shadowRoot ?? hostRef.value.attachShadow({ mode: 'open' });
+    root.innerHTML = DOMPurify.sanitize(html);
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/pagePilotOverrides.css';
+    root.appendChild(link);
+  },
+  { immediate: true },
+);
+<\/script>
+
+<template>
+  <div ref="hostRef" />
+</template>`;
+
+const OWN_CSS_FILE = `h1, h2, h3 { font-family: 'Inter', sans-serif; }
+a { color: #4f46e5; }
+table { border: 1px solid #e2e8f0; }`;
 </script>
 
 <template>
@@ -410,9 +474,77 @@ onMounted(async () => {
               rendering, check whether your sanitizer's default config is removing
               <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">style</code>
               attributes or tags along with anything genuinely unsafe — that's a sanitizer
-              configuration choice, not a Page Pilot content problem.
+              configuration choice, not a Page Pilot content problem. If instead the content's own
+              styling is colliding with your app's CSS, see
+              <a href="#render-content" class="text-brand hover:underline">Rendering page content safely</a> below.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section id="render-content" class="mb-12 scroll-mt-24">
+        <h2 id="render-content-heading" style="width: fit-content" class="mb-4 pb-2 text-xl font-bold">
+          Rendering page content safely
+        </h2>
+        <div id="render-content-body" class="space-y-3 leading-relaxed text-slate-600">
+          <p id="render-content-text">
+            <strong class="text-ink">The issue:</strong> a page's body (from
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">sections[].content</code>,
+            or the Context Help Menu's page content above) is raw HTML from the Page Pilot editor,
+            and it ships with its own embedded
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">&lt;style&gt;</code>
+            blocks. Render it with <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">v-html</code> straight into your page and those
+            styles share the same document as your app's CSS — either side can win. In practice
+            this shows up as your global reset or a sticky header breaking on pages with content,
+            or your Tailwind classes silently overriding the content's intended styling.
+          </p>
+          <CodeSnippet title="Before — same document, styles collide" :code="CSS_LEAK_BEFORE" language="vue" />
+          <p>
+            <strong class="text-ink">The fix:</strong> mount the content in a Shadow DOM instead of
+            the light DOM. It's a real style boundary in both directions — nothing leaks either
+            way.
+          </p>
+          <CodeSnippet title="After — isolated in a shadow root" :code="CSS_LEAK_AFTER" language="vue" />
+          <p>
+            <strong class="text-ink">Trade-off:</strong> your own Tailwind classes /
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">prose</code>
+            wrapper around the content also stop reaching in, since Shadow DOM blocks inherited
+            styling from outside (CSS custom properties like
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">var(--foo)</code>
+            are the one exception — those still pierce the boundary). If the content needs
+            baseline typography, inject a small stylesheet as a
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">&lt;style&gt;</code>
+            tag inside the shadow root before the HTML, e.g. by
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">fetch()</code>-ing
+            a static CSS file once and caching the promise.
+          </p>
+          <p>
+            Always sanitize with
+            <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">DOMPurify</code>
+            before assigning to <code class="inline-block rounded bg-brand-tint px-1.5 py-0.5 font-mono text-[13px] text-brand">innerHTML</code> —
+            Shadow DOM isolates styling, it is not an XSS sandbox.
+          </p>
+          <p>
+            <strong class="text-ink">Overriding Page Pilot's own styling:</strong> isolation cuts
+            both ways — your app's CSS can no longer reach in either, so you can't override the
+            content's look from outside like normal. Instead, load your own stylesheet
+            <em>into</em> the same shadow root, after the content, so it loads last and wins.
+          </p>
+          <CodeSnippet
+            title="Load your own stylesheet into the shadow root, after the content"
+            :code="OWN_CSS_OVERRIDE_CODE"
+            language="vue"
+          />
+          <CodeSnippet
+            title="public/pagePilotOverrides.css"
+            :code="OWN_CSS_FILE"
+            language="css"
+          />
+          <p class="text-sm text-slate-500">
+            Plain CSS, no build step. Only targets elements Page Pilot actually renders —
+            h1&#8211;h6, p, table, a, code, img — since it's scoped inside this content's shadow
+            root.
+          </p>
         </div>
       </section>
 

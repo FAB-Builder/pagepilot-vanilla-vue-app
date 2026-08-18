@@ -225,3 +225,70 @@ DELIVERABLE
 - An async function that takes the page slug (and any group names) as arguments — don't hardcode them — fetches the page plus the related lists (blogs and FAQs), and returns { pageInfo, blogs, faqs }.
 - Throw a clear error on a non-OK response.
 - Add short comments explaining each step. Use plain JavaScript / fetch — no extra dependencies.`;
+
+// ---------------------------------------------------------------------------
+// Preview mode: render the latest saved content instead of the static build.
+// ---------------------------------------------------------------------------
+
+export const PREVIEW_FETCH_CODE = `// Replace ${LEAD_APPLICATION_ID} with your workspace id.
+const PAGEPILOT_API = '${PP_BASE_SNIPPET}';
+
+// isPreview drops the { status: 'live' } filter, so unpublished edits come back too.
+async function fetchPageBySlug(slug, isPreview = false) {
+  const includes = isPreview ? [] : [{ filter: { status: 'live' } }];
+
+  const res = await fetch(\`\${PAGEPILOT_API}/pagebyslug/\${slug}\`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      data: {
+        includes,
+        pageSelect: {
+          select: { title: 1, editor: 1, head: 1, bodyBottom: 1 },
+          sectionSelect: { content: 1 },
+        },
+      },
+    }),
+  });
+
+  if (!res.ok) throw new Error(\`Failed to fetch page: \${res.status}\`);
+
+  const data = await res.json();
+  return data.page;
+}`;
+
+export const PREVIEW_VUE_CODE = `<script setup>
+import { ref, computed, onMounted } from 'vue';
+
+// staticPage is whatever your build already rendered (SSG output, cached
+// JSON, a bundled fixture). It stays on screen until the live copy arrives.
+const props = defineProps(['slug', 'staticPage']);
+
+const livePage = ref(null);
+
+onMounted(() => {
+  // Read the query string from the browser, after mount.
+  const mode = new URLSearchParams(window.location.search).get('mode');
+  if (mode !== 'preview' || !props.slug) return;
+
+  fetchPageBySlug(props.slug, true)
+    .then((page) => {
+      if (page) livePage.value = page;
+    })
+    .catch((err) => console.error('Preview fetch failed:', err));
+});
+
+// Preview content wins when present; otherwise the static build shows.
+const page = computed(() => livePage.value ?? props.staticPage);
+<\/script>
+
+<template>
+  <YourRenderer :page="page" />
+</template>`;
+
+export const PREVIEW_NUXT_NOTE_CODE = `// Nuxt: do NOT read useRoute().query for this during SSR.
+// Resolving the query on the server treats the route as dynamic and can opt
+// the page out of static prerendering (nuxt generate / nitro prerender).
+// Reading window.location.search inside onMounted runs client-only, after
+// hydration, so the page still prerenders and still flips to preview live.
+const mode = new URLSearchParams(window.location.search).get('mode');`;
