@@ -78,6 +78,7 @@ const SECTION_INDEX: Record<string, { id: string; label: string }[]> = {
     { id: 'ai-prompt', label: 'Integrate using AI' },
     { id: 'api', label: 'API reference' },
     { id: 'page-fields', label: 'What you can fetch' },
+    { id: 'preview-mode', label: 'Preview mode' },
   ],
   '/pages/template-variables': [
     { id: 'what-is-a-template', label: 'What is a template?' },

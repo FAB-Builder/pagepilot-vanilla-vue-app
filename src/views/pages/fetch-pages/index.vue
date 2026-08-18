@@ -23,6 +23,7 @@ import PageSelect from './sections/PageSelect.vue';
 import AiPrompt from './sections/AiPrompt.vue';
 import ApiReference from './sections/ApiReference.vue';
 import PageFields from './sections/PageFields.vue';
+import PreviewMode from './sections/PreviewMode.vue';
 
 const SECTIONS: DocSection[] = [
   { id: 'overview', label: 'Overview' },
@@ -39,6 +40,7 @@ const SECTIONS: DocSection[] = [
   { id: 'ai-prompt', label: 'Integrate using AI' },
   { id: 'api', label: 'API reference' },
   { id: 'page-fields', label: 'What you can fetch' },
+  { id: 'preview-mode', label: 'Preview mode' },
 ];
 </script>
 
@@ -75,6 +77,7 @@ const SECTIONS: DocSection[] = [
       <AiPrompt />
       <ApiReference />
       <PageFields />
+      <PreviewMode />
     </article>
   </DocLayout>
 </template>
